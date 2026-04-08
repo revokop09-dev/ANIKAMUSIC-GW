@@ -10,17 +10,17 @@ for root, dirs, files in os.walk('.'):
                 with open(filepath, 'r', encoding='utf-8') as f:
                     content = f.read()
                 
-                if 'YUKII' in content or 'yukii' in content or 'Yukii' in content:
-                    content = content.replace('YUKIIMUSIC', 'YUKIIMUSIC')
-                    content = content.replace('YUKII', 'YUKII')
+                if 'ANIKA' in content or 'yukii' in content or 'Anika' in content:
+                    content = content.replace('anikamusic', 'anikamusic')
+                    content = content.replace('ANIKA', 'ANIKA')
                     content = content.replace('yukii', 'yukii')
-                    content = content.replace('Yukii', 'Yukii')
+                    content = content.replace('Anika', 'Anika')
                     
                     with open(filepath, 'w', encoding='utf-8') as f:
                         f.write(content)
             except Exception:
                 pass
 
-if os.path.exists('YUKIIMUSIC'):
-    os.rename('YUKIIMUSIC', 'YUKIIMUSIC')
-    print("✅ Folder Renamed to YUKIIMUSIC")
+if os.path.exists('anikamusic'):
+    os.rename('anikamusic', 'anikamusic')
+    print("✅ Folder Renamed to anikamusic")
