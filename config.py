@@ -16,13 +16,13 @@ API_HASH = getenv("API_HASH")
 # ------------------------------------------------------
 BOT_TOKEN = getenv("BOT_TOKEN")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","Kaito_3_2")
+OWNER_USERNAME = getenv("OWNER_USERNAME","aizollr")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME" , "IAM_MIMBOT")
+BOT_USERNAME = getenv("BOT_USERNAME" , "Anikatunesbot")
 # --------------------------------------------------------
-BOT_NAME = getenv("BOT_NAME" , "MIMI X MUSIC")
+BOT_NAME = getenv("BOT_NAME" , "ANIKA X MUSIC")
 # ---------------------------------------------------------
-ASSUSERNAME = getenv("ASSUSERNAME" , "Kaito_3_2")
+ASSUSERNAME = getenv("ASSUSERNAME" , "aizollr")
 # ---------------------------------------------------------
 GROQ_API_KEY="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"
 
@@ -41,7 +41,7 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 LOGGER_ID = int(getenv("LOGGER_ID", -1003639584506))
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
-OWNER_ID = int(getenv("OWNER_ID", 6356015122))
+OWNER_ID = int(getenv("OWNER_ID", 7372417242))
 # -----------------------------------------------------------------
 # -----------------------------------------------------------------
 
@@ -71,7 +71,7 @@ GIT_TOKEN = getenv(
 # ------------------------------------------------------------------------
 # -------------------------------------------------------------------------
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/+N08m5L1mCTU2NTE1")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/heartstealer_x")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/UpsidePortal")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 
