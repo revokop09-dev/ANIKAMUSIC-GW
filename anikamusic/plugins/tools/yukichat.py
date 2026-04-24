@@ -83,7 +83,7 @@ def generate_system_message(raw_prompt):
 # ─────────────────────────────
 async def get_groq_response(messages_list, api_key):
     if not api_key:
-        return "Sudeep boss ne abhi tak meri API key set nahi ki hai! 😅"
+        return "Gw boss ne abhi tak meri API key set nahi ki hai! 😅"
         
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
@@ -316,7 +316,7 @@ async def yuki_main_chat(client, message: Message):
         if stk_list:
             await message.reply_sticker(random.choice(stk_list))
         else:
-            await message.reply("Sudeep ne abhi tak mere stickers add nahi kiye! 😅")
+            await message.reply("Gw ne abhi tak mere stickers add nahi kiye! 😅")
         return
     else:
         # Reset streak if user sends text
