@@ -45,3 +45,23 @@ async def help_com_group(client, message: Message, _):
         [[types.InlineKeyboardButton(text=_["S_B_1"], url=f"https://t.me/{app.username}?start=help")]]
     )
     await message.reply_text(_["help_2"], reply_markup=keyboard)
+@app.on_callback_query(filters.regex("mbot_cb") & ~BANNED_USERS)
+async def help_pagination(client, query: CallbackQuery):
+    try:
+        await query.answer()
+        language = await get_lang(query.message.chat.id)
+        _ = get_string(language)
+        
+        # Check if we are currently on page 1 or 2 by looking at the button text
+        # If START is True, it shows the second set of buttons
+        current_button_text = query.message.reply_markup.inline_keyboard[0][0].text
+        state = True if current_button_text == "<🔘" else False
+        
+        keyboard = help_pannel(_, START=state)
+        await query.edit_message_text(
+            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
+        )
+    except MessageNotModified:
+        pass
+    except Exception as e:
+        print(f"Pagination Error: {e}")
