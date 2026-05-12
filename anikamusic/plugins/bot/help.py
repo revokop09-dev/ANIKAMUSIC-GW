@@ -1,115 +1,58 @@
-from typing import Union
 from pyrogram import filters, types
-from pyrogram.types import InlineKeyboardMarkup, Message, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, Message, CallbackQuery
+from pyrogram.errors import MessageNotModified
 from anikamusic import app
-from anikamusic.utils import help_pannel
+from anikamusic.utils import help_pannel, help_back_markup
 from anikamusic.utils.database import get_lang
-from anikamusic.utils.decorators.language import LanguageStart, languageCB
-from anikamusic.utils.inline.help import help_back_markup, private_help_panel
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
-from anikamusic.utils.stuffs.buttons import BUTTONS
-from anikamusic.utils.stuffs.helper import Helper
 
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
-async def helper_private(
-    client: app, update: Union[types.Message, types.CallbackQuery]
-):
-    is_callback = isinstance(update, types.CallbackQuery)
+async def helper_private(client, update):
+    is_callback = isinstance(update, CallbackQuery)
+    chat_id = update.message.chat.id if is_callback else update.chat.id
+    if is_callback:
+        try: await update.answer()
+        except: pass
+
+    language = await get_lang(chat_id)
+    _ = get_string(language)
+    keyboard = help_pannel(_, START=None)
+
     if is_callback:
         try:
-            await update.answer()
-        except:
-            pass
-        chat_id = update.message.chat.id
-        language = await get_lang(chat_id)
-        _ = get_string(language)
-        keyboard = help_pannel(_, True)
-        await update.edit_message_text(
-            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
-        )
+            await update.edit_message_text(_["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard)
+        except MessageNotModified: pass
     else:
-        try:
-            await update.delete()
-        except:
-            pass
-        language = await get_lang(update.chat.id)
-        _ = get_string(language)
-        keyboard = help_pannel(_)
-        await update.reply_photo(
-            photo=START_IMG_URL,
-            caption=_["help_1"].format(SUPPORT_CHAT),
-            reply_markup=keyboard,
-        )
+        await update.reply_photo(photo=START_IMG_URL, caption=_["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard)
 
-
-@app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
-@LanguageStart
-async def help_com_group(client, message: Message, _):
-    keyboard = private_help_panel(_)
-    await message.reply_text(_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard))
-
-
+# This part makes the "Usage" work when you click a command button
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
-@languageCB
-async def helper_cb(client, CallbackQuery, _):
-    callback_data = CallbackQuery.data.strip()
+async def helper_cb(client, query: CallbackQuery):
+    callback_data = query.data.strip()
     cb = callback_data.split(None, 1)[1]
+    language = await get_lang(query.message.chat.id)
+    _ = get_string(language)
     keyboard = help_back_markup(_)
-    if cb == "hb1":
-        await CallbackQuery.edit_message_text(helpers.HELP_1, reply_markup=keyboard)
-    elif cb == "hb2":
-        await CallbackQuery.edit_message_text(helpers.HELP_2, reply_markup=keyboard)
-    elif cb == "hb3":
-        await CallbackQuery.edit_message_text(helpers.HELP_3, reply_markup=keyboard)
-    elif cb == "hb4":
-        await CallbackQuery.edit_message_text(helpers.HELP_4, reply_markup=keyboard)
-    elif cb == "hb5":
-        await CallbackQuery.edit_message_text(helpers.HELP_5, reply_markup=keyboard)
-    elif cb == "hb6":
-        await CallbackQuery.edit_message_text(helpers.HELP_6, reply_markup=keyboard)
-    elif cb == "hb7":
-        await CallbackQuery.edit_message_text(helpers.HELP_7, reply_markup=keyboard)
-    elif cb == "hb8":
-        await CallbackQuery.edit_message_text(helpers.HELP_8, reply_markup=keyboard)
-    elif cb == "hb9":
-        await CallbackQuery.edit_message_text(helpers.HELP_9, reply_markup=keyboard)
-    elif cb == "hb10":
-        await CallbackQuery.edit_message_text(helpers.HELP_10, reply_markup=keyboard)
-    elif cb == "hb11":
-        await CallbackQuery.edit_message_text(helpers.HELP_11, reply_markup=keyboard)
-    elif cb == "hb12":
-        await CallbackQuery.edit_message_text(helpers.HELP_12, reply_markup=keyboard)
-    elif cb == "hb13":
-        await CallbackQuery.edit_message_text(helpers.HELP_13, reply_markup=keyboard)
-    elif cb == "hb14":
-        await CallbackQuery.edit_message_text(helpers.HELP_14, reply_markup=keyboard)
-    elif cb == "hb15":
-        await CallbackQuery.edit_message_text(helpers.HELP_15, reply_markup=keyboard)
-        
-        
-@app.on_callback_query(filters.regex("mbot_cb") & ~BANNED_USERS)
-async def helper_cb(client, CallbackQuery):
-    await CallbackQuery.edit_message_text(Helper.HELP_M, reply_markup=InlineKeyboardMarkup(BUTTONS.MBUTTON))
-
-
-@app.on_callback_query(filters.regex('managebot123'))
-async def on_back_button(client, CallbackQuery):
-    callback_data = CallbackQuery.data.strip()
-    cb = callback_data.split(None, 1)[1]
-    keyboard = help_pannel(_, True)
-    if cb == "settings_back_helper":
-        await CallbackQuery.edit_message_text(
-            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
-        )
-
-@app.on_callback_query(filters.regex('mplus'))      
-async def mb_plugin_button(client, CallbackQuery):
-    callback_data = CallbackQuery.data.strip()
-    cb = callback_data.split(None, 1)[1]
-    keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴀᴄᴋ", callback_data=f"mbot_cb")]])
-    if cb == "Okieeeeee":
-        await CallbackQuery.edit_message_text(f"`something errors`",reply_markup=keyboard,parse_mode=enums.ParseMode.MARKDOWN)
+    
+    if cb in helpers.__dict__:
+        await query.edit_message_text(getattr(helpers, cb), reply_markup=keyboard)
     else:
-        await CallbackQuery.edit_message_text(getattr(Helper, cb), reply_markup=keyboard)
+        await query.answer("Usage guide not found.", show_alert=True)
+
+# This part makes the arrows work for all 33 commands
+@app.on_callback_query(filters.regex("mbot_cb") & ~BANNED_USERS)
+async def help_pagination(client, query: CallbackQuery):
+    try:
+        await query.answer()
+        language = await get_lang(query.message.chat.id)
+        _ = get_string(language)
+        
+        # If the first button is Admin (H_B_1), we are on Page 1, so go to Page 2
+        current_text = query.message.reply_markup.inline_keyboard[0][0].text
+        state = True if current_text == _["H_B_1"] else False
+        
+        keyboard = help_pannel(_, START=state)
+        await query.edit_message_text(_["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard)
+    except: pass
