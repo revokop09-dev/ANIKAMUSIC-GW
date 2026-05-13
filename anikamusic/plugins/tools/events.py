@@ -16,7 +16,7 @@ from anikamusic.utils.database import get_served_chats, get_served_users
 #              CONFIGURATION
 # ==========================================
 # Yaha apni Groq API key daalo
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "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"
 groq_client = AsyncGroq(api_key=GROQ_API_KEY)
 
 # India holidays setup
