@@ -122,17 +122,17 @@ async def start_pm(client, message: Message, _):
     loading_1 = await message.reply_text(random.choice(GREET))
     await add_served_user(message.from_user.id)
     
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
     await loading_1.edit_text("<emoji id='5413546177683539369'>😈</emoji> <b>ᴅɪηɢ ᴅᴏηɢ.</b>")
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
     await loading_1.edit_text("<emoji id='5413546177683539369'>😈</emoji> <b>ᴅɪηɢ ᴅᴏηɢ..</b>")
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
     await loading_1.edit_text("<emoji id='6080202089311507876'>😎</emoji> <b>sᴛᴧʀᴛɪηɢ...</b>")
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
     await loading_1.edit_text("<emoji id='6001132493011425597'>💖</emoji> <b>ʜєʏ ʙᴧʙʏ!</b>")
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
     await loading_1.edit_text("<emoji id='5413840936994097463'>🌺</emoji> <b>𝐀ɴɪᴋᴀ ꭙ ϻᴜsɪᴄ ♪\nsᴛᴧʀᴛed!</b>")
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
     await loading_1.delete()
     
     if len(message.text.split()) > 1:
