@@ -110,12 +110,12 @@ async def send_magic_start(chat_id, photo_url, caption, markup, reply_to_id=None
 async def start_pm(client, message: Message, _):
     
     try:
-        await client.send_reaction(chat_id=message.chat.id, message_id=message.id, emoji="🥰")
+        await client.send_reaction(chat_id=message.chat.id, message_id=message.id, emoji="🎉")
     except: pass
         
     try:
         stk = await message.reply_sticker("CAACAgUAAxkBAAFGelBp0ipffTacP6bK3ik2BabuZJohkwACoh0AAsI8kFYAARHuC8AH2Jw7BA")
-        await asyncio.sleep(2) 
+        await asyncio.sleep(1) 
         await stk.delete()     
     except: pass
 
