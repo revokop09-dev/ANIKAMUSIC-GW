@@ -1,5 +1,5 @@
 <h2 align="center">
-    ─˹𝐘ᴜᴋɪ ꭙ ᴍᴜsɪᴄ˼─
+    ─˹𝐀ɴɪᴋᴀ ꭙ ᴍᴜsɪᴄ˼─
 </h2>""Typing SVG" (https://readme-typing-svg.herokuapp.com/?lines=ㅤ+𝚆𝙴𝙻𝙲𝙾𝙼𝙴+𝚃𝙾+𝐘ᴜᴋɪ+𝙼𝚄𝚂𝙸𝙲+𝚁𝙴𝙿𝙾+;ㅤ+𝚃𝙷𝙸𝚂+𝙸𝚂+𝙰+𝙰𝙳𝚅𝙰𝙽𝙲𝙴+𝙼𝚄𝚂𝙸𝙲+𝙱𝙾𝚃;𝙿𝙾𝚆𝙴𝚁𝙴𝙳+𝙱𝚈+☞+YUKI+MUSIC)" (https://github.com)
 
 <p align="center">
@@ -77,6 +77,6 @@ Press Ctrl+C then type :wq to save
 
 Contact :
 
-<a href="https://t.me/Zcziiy"><img title="Telegram" src="https://img.shields.io/badge/Telegram-%23000000.svg?&style=for-the-badge&logo=telegram&logoColor=61DAFB"></a>
+<a href="https://t.me/aizollr"><img title="Telegram" src="https://img.shields.io/badge/Telegram-%23000000.svg?&style=for-the-badge&logo=telegram&logoColor=61DAFB"></a>
 
-Owner Telegram : @Zcziiy
+Owner Telegram : @aizollr
