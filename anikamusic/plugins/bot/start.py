@@ -123,9 +123,9 @@ async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     
     await asyncio.sleep(0.1)
-    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ..</b>")
+    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ..❤️‍🔥</b>")
     await asyncio.sleep(0.1)
-    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ...</b>")
+    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ...❤️‍🔥</b>")
     await asyncio.sleep(0.1)
     await loading_1.edit_text("<b>ʜєʏ ʙᴧʙʏ! 💞</b>")
     await asyncio.sleep(0.1)
