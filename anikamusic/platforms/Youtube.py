@@ -28,7 +28,7 @@ async def get_api_url():
     if YOUR_API_URL: return YOUR_API_URL
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://pastebin.com/raw/rLsBhAQa", timeout=5) as resp:
+            async with session.get(None, timeout=5) as resp:
                 if resp.status == 200:
                     YOUR_API_URL = (await resp.text()).strip()
                 else:
