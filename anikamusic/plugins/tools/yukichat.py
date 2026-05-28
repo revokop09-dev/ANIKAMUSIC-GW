@@ -290,7 +290,7 @@ async def yuki_main_chat(client, message: Message):
     is_dm = message.chat.type.name == "PRIVATE"
     
     text_lower = message.text.lower() if message.text else ""
-    is_mentioned = "yuki" in text_lower or (message.text and f"@{app.username}" in message.text)
+    is_mentioned = "anika" in text_lower or (message.text and f"@{app.username}" in message.text)
     is_reply_to_bot = message.reply_to_message and message.reply_to_message.from_user.id == bot_id
     
     # Trigger logic: Always in DM OR (Mentioned/Replied/Yuki in group)
