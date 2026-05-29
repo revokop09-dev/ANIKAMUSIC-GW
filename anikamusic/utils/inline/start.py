@@ -65,7 +65,7 @@ def private_panel(_):
             ),
             # Version Button (Blue) - Changed from Mimi Tunes
             api_btn(
-                text="˹ᴠᴇʀsɪᴏɴ˼♪", 
+                text="𝚼єʀsιᴏη", 
                 callback_data="yuki_version_info", 
                 style="primary", 
                 custom_emoji_id="5413840936994097463"
