@@ -73,8 +73,41 @@ async def play_commnd(
                 pass
                 
             return
+            
+    # === 🚫 NSFW & ILLEGAL CONTENT FILTER 🚫 ===
+    if len(message.command) > 1:
+        # Pura search query lower case mein le raha hai
+        query = message.text.split(None, 1)[1].lower()
+        
+        # Yahan apni blocked words ki list add kar lena
+        blocked_words = [
+            "xxx", "porn", "sex", "nude", "drugs", "drug", 
+            "nsfw", "rape", "xnxx", "xvideos", "hot video",
+            "sexy","land","pron1","xxxx","fuck","sexx","sexxx",
+        ]
+        
+        # Check agar query mein koi blocked word hai
+        if any(word in query for word in blocked_words):
+            mention = message.from_user.mention
+            
+            # Premium Aesthetic Blocked Message
+            blocked_msg = (
+                f"<blockquote><b>🚫 ᴄᴏɴᴛᴇɴᴛ ʙʟᴏᴄᴋᴇᴅ !</b></blockquote>\n\n"
+                f"<blockquote><b>⚠️ ᴛʜɪs ǫᴜᴇʀʏ ᴄᴏɴᴛᴀɪɴs ɪʟʟᴇɢᴀʟ ᴏʀ ᴘʀᴏʜɪʙɪᴛᴇᴅ ᴛᴇʀᴍs.</b>\n"
+                f"<b>🛑 ᴘʟᴇᴀsᴇ ᴜsᴇ ᴀᴘᴘʀᴏᴘʀɪᴀᴛᴇ sᴇᴀʀᴄʜ ᴛᴇʀᴍs, {mention}.</b></blockquote>"
+            )
+            
+            await message.reply_text(blocked_msg)
+            
+            # Optional: Gusse wala sticker send karega (Tere list mese hi ek strict wala)
+            try:
+                await message.reply_sticker("CAACAgUAAxkBAAFGekFp0ik5WWEy4etIEwKqZZWSwD2c8wACKgsAAnbIEFe8P0r42zZZfDsE")
+            except Exception:
+                pass
+                
+            return
     # ====================================================
-    
+        
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
@@ -322,7 +355,7 @@ async def play_commnd(
             return await mystic.delete()
         else:
             try:
-                await ANIKA.stream_call(url)
+                await YUKII.stream_call(url)
             except NoActiveGroupCall:
                 await mystic.edit_text(_["black_9"])
                 return await app.send_message(
@@ -535,8 +568,8 @@ async def play_music(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@app.on_callback_query(filters.regex("ANIKAmousAdmin") & ~BANNED_USERS)
-async def ANIKAmous_check(client, CallbackQuery):
+@app.on_callback_query(filters.regex("YUKIImousAdmin") & ~BANNED_USERS)
+async def YUKIImous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
             "» ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ :\n\nᴏᴘᴇɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ sᴇᴛᴛɪɴɢs.\n-> ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs\n-> ᴄʟɪᴄᴋ ᴏɴ ʏᴏᴜʀ ɴᴀᴍᴇ\n-> ᴜɴᴄʜᴇᴄᴋ ᴀɴᴏɴʏᴍᴏᴜs ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.",
@@ -546,7 +579,7 @@ async def ANIKAmous_check(client, CallbackQuery):
         pass
 
 
-@app.on_callback_query(filters.regex("ANIKAPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("YUKIIPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
