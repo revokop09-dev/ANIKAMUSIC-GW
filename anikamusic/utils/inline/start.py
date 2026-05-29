@@ -23,19 +23,19 @@ def api_btn(text, callback_data=None, url=None, style=None, custom_emoji_id=None
 def start_panel(_):
     buttons = [
         [
-            # Add to Group (Blue)
+            # Add to Group (Green/Success)
             api_btn(
                 text=_["S_B_1"], 
                 url=f"https://t.me/{app.username}?startgroup=true", 
                 style="success", 
-                custom_emoji_id="6001132493011425597"
+                custom_emoji_id="5235682785863153026"
             ),
-            # Support Chat (Red)
+            # Support Chat (Red/Danger)
             api_btn(
                 text=_["S_B_2"], 
                 url=config.SUPPORT_CHAT, 
                 style="danger", 
-                custom_emoji_id="5999100917645841519"
+                custom_emoji_id="5206523956537865948"
             ),
         ],
     ]
@@ -47,21 +47,21 @@ def private_panel(_):
     
     buttons = [
         [
-            # Add to Group (Blue)
+            # Tap To See Magic (Green/Success) - Akela Bada Button
             api_btn(
                 text=_["S_B_3"],
                 url=f"https://t.me/{app.username}?startgroup=true",
                 style="success",
-                custom_emoji_id="6080202089311507876"
+                custom_emoji_id="5249244862359812334"
             )
         ],
         [
-            # Settings/Help (Green/Primary)
+            # Help & Commands (Blue/Primary)
             api_btn(
                 text=_["S_B_4"], 
                 callback_data="settings_back_helper", 
                 style="primary", 
-                custom_emoji_id="6080176744709495278"
+                custom_emoji_id="5238162283368035495"
             ),
             # Version Button (Blue) - Changed from Mimi Tunes
             api_btn(
@@ -79,21 +79,21 @@ def private_panel(_):
                 style="primary", 
                 custom_emoji_id="5415586682286128590"
             ),
-            # Support Chat (Red)
+            # Chating Hub / Support Chat (Red/Danger)
             api_btn(
                 text=_["S_B_2"], 
                 url=config.SUPPORT_CHAT, 
                 style="danger", 
-                custom_emoji_id="5413415116756500503"
+                custom_emoji_id="5258208871423425369"
             ),
         ],
         [
-            # Owner (Red)
+            # My Master (Red/Danger) - Akela Bada Button Niche
             api_btn(
                 text=_["S_B_5"], 
                 url=f"tg://user?id={safe_owner_id}", 
                 style="danger", 
-                custom_emoji_id="5413546177683539369"
+                custom_emoji_id="5201875852735820002"
             ),
         ],
     ]
