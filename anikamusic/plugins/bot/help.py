@@ -11,7 +11,6 @@ from strings import get_string, helpers
 from anikamusic.utils.stuffs.buttons import BUTTONS
 from anikamusic.utils.stuffs.helper import Helper
 
-@app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def helper_private(
     client: app, update: Union[types.Message, types.CallbackQuery]
@@ -94,22 +93,46 @@ async def helper_cb(client, CallbackQuery):
     await CallbackQuery.edit_message_text(Helper.HELP_M, reply_markup=InlineKeyboardMarkup(BUTTONS.MBUTTON))
 
 
-@app.on_callback_query(filters.regex('managebot123'))
+# 
+@app.on_callback_query(filters.regex('managebot123') & ~BANNED_USERS)
 async def on_back_button(client, CallbackQuery):
-    callback_data = CallbackQuery.data.strip()
-    cb = callback_data.split(None, 1)[1]
-    keyboard = help_pannel(_, True)
-    if cb == "settings_back_helper":
+    try:
+        language = await get_lang(CallbackQuery.message.chat.id)
+        _ = get_string(language)
+        keyboard = help_pannel(_, True)
         await CallbackQuery.edit_message_text(
             _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
         )
+    except Exception as e:
+        pass
 
-@app.on_callback_query(filters.regex('mplus'))      
+
+@app.on_callback_query(filters.regex('mplus') & ~BANNED_USERS)      
 async def mb_plugin_button(client, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
     keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴀᴄᴋ", callback_data=f"mbot_cb")]])
     if cb == "Okieeeeee":
-        await CallbackQuery.edit_message_text(f"`something errors`",reply_markup=keyboard,parse_mode=enums.ParseMode.MARKDOWN)
+        await CallbackQuery.edit_message_text(f"`something errors`", reply_markup=keyboard, parse_mode=enums.ParseMode.MARKDOWN)
     else:
         await CallbackQuery.edit_message_text(getattr(Helper, cb), reply_markup=keyboard)
+
+
+# 
+@app.on_callback_query(filters.regex("yuki_back") & ~BANNED_USERS)
+async def back_to_start(client, CallbackQuery):
+    try:
+        language = await get_lang(CallbackQuery.message.chat.id)
+        _ = get_string(language)
+        keyboard = private_panel(_)
+        
+        # 
+        start_text = _["start_2"].format(CallbackQuery.from_user.mention, app.mention)
+        
+        await CallbackQuery.edit_message_text(
+            text=start_text,
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+    except Exception as e:
+        print(f"Back button error: {e}")
+        
