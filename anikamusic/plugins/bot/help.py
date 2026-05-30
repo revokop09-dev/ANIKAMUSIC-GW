@@ -141,4 +141,4 @@ async def back_to_start(client, CallbackQuery):
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
     except Exception as e:
-        print(f"Back button error: {e}")
+        raise e
