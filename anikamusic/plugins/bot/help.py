@@ -122,11 +122,15 @@ async def mb_plugin_button(client, CallbackQuery):
 @app.on_callback_query(filters.regex("yuki_back") & ~BANNED_USERS)
 async def back_to_start(client, CallbackQuery):
     try:
+        await CallbackQuery.answer() # 1. This stops the loading wheel in Telegram
+        
         language = await get_lang(CallbackQuery.message.chat.id)
         _ = get_string(language)
-        keyboard = private_panel(_)
         
-        # 
+        # 2. ADD THIS IMPORT LINE TO FIX THE ERROR:
+        from anikamusic.utils.inline.start import private_panel
+        
+        keyboard = private_panel(_)
         start_text = _["start_2"].format(CallbackQuery.from_user.mention, app.mention)
         
         await CallbackQuery.edit_message_text(
@@ -135,4 +139,3 @@ async def back_to_start(client, CallbackQuery):
         )
     except Exception as e:
         print(f"Back button error: {e}")
-        
