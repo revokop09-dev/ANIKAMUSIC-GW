@@ -127,7 +127,6 @@ async def back_to_start(client, CallbackQuery):
         language = await get_lang(CallbackQuery.message.chat.id)
         _ = get_string(language)
         
-        # We try importing it as 'private_panel' first, and if that doesn't exist, we use 'start_pannel'
         try:
             from anikamusic.utils.inline.start import private_panel as start_keyboard
         except ImportError:
@@ -138,7 +137,8 @@ async def back_to_start(client, CallbackQuery):
         
         await CallbackQuery.edit_message_text(
             text=start_text,
-            reply_markup=InlineKeyboardMarkup(keyboard)
+            reply_markup=keyboard  # <-- FIXED: Removed the extra InlineKeyboardMarkup wrapping
         )
     except Exception as e:
         raise e
+
