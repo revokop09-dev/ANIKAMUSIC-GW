@@ -122,15 +122,18 @@ async def mb_plugin_button(client, CallbackQuery):
 @app.on_callback_query(filters.regex("yuki_back") & ~BANNED_USERS)
 async def back_to_start(client, CallbackQuery):
     try:
-        await CallbackQuery.answer() # 1. This stops the loading wheel in Telegram
+        await CallbackQuery.answer()
         
         language = await get_lang(CallbackQuery.message.chat.id)
         _ = get_string(language)
         
-        # 2. ADD THIS IMPORT LINE TO FIX THE ERROR:
-        from anikamusic.utils.inline.start import private_panel
+        # We try importing it as 'private_panel' first, and if that doesn't exist, we use 'start_pannel'
+        try:
+            from anikamusic.utils.inline.start import private_panel as start_keyboard
+        except ImportError:
+            from anikamusic.utils.inline.start import start_pannel as start_keyboard
         
-        keyboard = private_panel(_)
+        keyboard = start_keyboard(_)
         start_text = _["start_2"].format(CallbackQuery.from_user.mention, app.mention)
         
         await CallbackQuery.edit_message_text(
