@@ -14,7 +14,7 @@ def help_pannel(_, START: Union[bool, int] = None):
         ),
         InlineKeyboardButton(
             text=_["BACK_BUTTON"],
-            callback_data=f"settingsback_helper",
+            callback_data=f"yuki_back",
         ),
         InlineKeyboardButton(
             text=_["NEXT_PAGE"],
