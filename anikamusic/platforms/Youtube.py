@@ -14,7 +14,7 @@ from anikamusic.utils.database import is_on_off
 from anikamusic.utils.formatters import time_to_seconds
 
 # SHRUTI API CONFIG
-FALLBACK_API_URL = "https://evans-hurricane-optional-bulk.trycloudflare.com"
+FALLBACK_API_URL = "https://api.shrutibots.site"
 YOUR_API_URL = None
 
 cookies_file = "anikamusic/assets/cookies.txt"
