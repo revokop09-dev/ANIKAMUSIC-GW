@@ -119,7 +119,7 @@ async def mb_plugin_button(client, CallbackQuery):
 
 
 # 
-@app.on_callback_query(filters.regex("yuki_back") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def back_to_start(client, CallbackQuery):
     try:
         await CallbackQuery.answer()
