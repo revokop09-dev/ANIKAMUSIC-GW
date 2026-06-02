@@ -110,7 +110,7 @@ async def send_magic_start(chat_id, photo_url, caption, markup, reply_to_id=None
 async def start_pm(client, message: Message, _):
     
     try:
-        await client.send_reaction(chat_id=message.chat.id, message_id=message.id, emoji="🎉")
+        await client.send_reaction(chat_id=message.chat.id, message_id=message.id, emoji="⚡")
     except: pass
         
     try:
