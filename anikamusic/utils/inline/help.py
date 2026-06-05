@@ -14,7 +14,7 @@ def help_pannel(_, START: Union[bool, int] = None):
         ),
         InlineKeyboardButton(
             text=_["BACK_BUTTON"],
-            callback_data=f"yuki_back",
+            callback_data=f"settings_back_helper",  # CHANGED: From "yuki_back" to "settings_back_helper"
         ),
         InlineKeyboardButton(
             text=_["NEXT_PAGE"],
@@ -101,12 +101,13 @@ def help_pannel(_, START: Union[bool, int] = None):
 
 
 def help_back_markup(_):
+    """Back button from help details - returns to main help panel"""
     upl = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
                     text=_["BACK_BUTTON"],
-                    callback_data=f"settings_back_helper",
+                    callback_data="settings_back_helper",  # Consistent callback
                 ),
             ]
         ]
