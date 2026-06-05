@@ -16,6 +16,8 @@ API_HASH = getenv("API_HASH")
 # ------------------------------------------------------
 BOT_TOKEN = getenv("BOT_TOKEN")
 # -------------------------------------------------------
+YOUTUBE_API_URL = getenv("YOUTUBE_API_URL", "https://yukiytapi.onrender.com")
+# -------------------------------------------------------
 OWNER_USERNAME = getenv("OWNER_USERNAME","aizollr")
 # --------------------------------------------------------
 BOT_USERNAME = getenv("BOT_USERNAME" , "Anikatunesbot")
