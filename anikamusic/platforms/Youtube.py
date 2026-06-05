@@ -16,6 +16,8 @@ from anikamusic.utils.formatters import time_to_seconds
 # SHRUTI API CONFIG
 FALLBACK_API_URL = "https://evans-hurricane-optional-bulk.trycloudflare.com"
 YOUR_API_URL = None
+# ADD THIS LINE RIGHT HERE:
+YOUTUBE_API_URL = os.getenv("YOUTUBE_API_URL", "https://yukiytapi.onrender.com")
 
 cookies_file = "anikamusic/assets/cookies.txt"
 
@@ -257,32 +259,52 @@ class YouTubeAPI:
         # STEP 3: Fallback (YT-DLP)
         loop = asyncio.get_running_loop()
 
-        def audio_dl():
-            ydl_optssx = {
-                "format": "bestaudio/best", "outtmpl": "downloads/%(id)s.%(ext)s",
-                "geo_bypass": True, "nocheckcertificate": True, "quiet": True,
-                "no_warnings": True, "cookiefile": cookies_file,
+def audio_dl():
+    ydl_optssx = {
+        "format": "bestaudio/best", 
+        "outtmpl": "downloads/%(id)s.%(ext)s",
+        "geo_bypass": True, 
+        "nocheckcertificate": True, 
+        "quiet": True, 
+        "no_warnings": True,
+        "cookiefile": cookies_file,
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "ios", "web_embedded"],
+                "skip": ["dash", "hls"]
             }
-            x = yt_dlp.YoutubeDL(ydl_optssx)
-            info = x.extract_info(link, False)
-            xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
-            if os.path.exists(xyz): return xyz
-            x.download([link])
-            return xyz
+        }
+    }
+    x = yt_dlp.YoutubeDL(ydl_optssx)
+    info = x.extract_info(link, False)
+    xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
+    if os.path.exists(xyz): return xyz
+    x.download([link])
+    return xyz
 
-        def video_dl():
-            ydl_optssx = {
-                "format": "(bestvideo[height<=?720][width<=?1280][ext=mp4])+(bestaudio[ext=m4a])",
-                "outtmpl": "downloads/%(id)s.%(ext)s",
-                "geo_bypass": True, "nocheckcertificate": True, "quiet": True,
-                "no_warnings": True, "cookiefile": cookies_file,
+def video_dl():
+    ydl_optssx = {
+        "format": "(bestvideo[height<=720][width<=1280][ext=mp4])+(bestaudio[ext=m4a]/best)", 
+        "outtmpl": "downloads/%(id)s.%(ext)s",
+        "geo_bypass": True, 
+        "nocheckcertificate": True, 
+        "quiet": True, 
+        "no_warnings": True,
+        "cookiefile": cookies_file,
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "ios", "web_embedded"],
+                "skip": ["dash", "hls"]
             }
-            x = yt_dlp.YoutubeDL(ydl_optssx)
-            info = x.extract_info(link, False)
-            xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
-            if os.path.exists(xyz): return xyz
-            x.download([link])
-            return xyz
+        }
+    }
+    x = yt_dlp.YoutubeDL(ydl_optssx)
+    info = x.extract_info(link, False)
+    xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
+    if os.path.exists(xyz): return xyz
+    x.download([link])
+    return xyz
+
 
         if video:
             direct = True
