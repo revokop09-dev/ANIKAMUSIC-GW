@@ -86,16 +86,17 @@ async def helper_cb(client, CallbackQuery, _):
         await CallbackQuery.edit_message_text(helpers.HELP_14, reply_markup=keyboard)
     elif cb == "hb15":
         await CallbackQuery.edit_message_text(helpers.HELP_15, reply_markup=keyboard)
-        
-        
+
+
+# Handle mbot_cb callback
 @app.on_callback_query(filters.regex("mbot_cb") & ~BANNED_USERS)
-async def helper_cb(client, CallbackQuery):
+async def mbot_cb_handler(client, CallbackQuery):
     await CallbackQuery.edit_message_text(Helper.HELP_M, reply_markup=InlineKeyboardMarkup(BUTTONS.MBUTTON))
 
 
-# 
+# Handle managebot123 callback
 @app.on_callback_query(filters.regex('managebot123') & ~BANNED_USERS)
-async def on_back_button(client, CallbackQuery):
+async def managebot_handler(client, CallbackQuery):
     try:
         language = await get_lang(CallbackQuery.message.chat.id)
         _ = get_string(language)
@@ -107,8 +108,9 @@ async def on_back_button(client, CallbackQuery):
         pass
 
 
+# Handle mplus callback
 @app.on_callback_query(filters.regex('mplus') & ~BANNED_USERS)      
-async def mb_plugin_button(client, CallbackQuery):
+async def mplus_button_handler(client, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
     keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴀᴄᴋ", callback_data=f"mbot_cb")]])
@@ -118,27 +120,16 @@ async def mb_plugin_button(client, CallbackQuery):
         await CallbackQuery.edit_message_text(getattr(Helper, cb), reply_markup=keyboard)
 
 
-# 
-@app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
-async def back_to_start(client, CallbackQuery):
+# Handle yuki_back callback (THE MISSING HANDLER FOR BACK BUTTON)
+@app.on_callback_query(filters.regex("yuki_back") & ~BANNED_USERS)
+async def yuki_back_handler(client, CallbackQuery):
     try:
         await CallbackQuery.answer()
-        
         language = await get_lang(CallbackQuery.message.chat.id)
         _ = get_string(language)
-        
-        try:
-            from anikamusic.utils.inline.start import private_panel as start_keyboard
-        except ImportError:
-            from anikamusic.utils.inline.start import start_pannel as start_keyboard
-        
-        keyboard = start_keyboard(_)
-        start_text = _["start_2"].format(CallbackQuery.from_user.mention, app.mention)
-        
+        keyboard = help_pannel(_, True)
         await CallbackQuery.edit_message_text(
-            text=start_text,
-            reply_markup=keyboard  # <-- FIXED: Removed the extra InlineKeyboardMarkup wrapping
+            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
         )
     except Exception as e:
-        raise e
-
+        pass
