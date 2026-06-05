@@ -11,6 +11,7 @@ from strings import get_string, helpers
 from anikamusic.utils.stuffs.buttons import BUTTONS
 from anikamusic.utils.stuffs.helper import Helper
 
+@app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def helper_private(
     client: app, update: Union[types.Message, types.CallbackQuery]
@@ -86,50 +87,29 @@ async def helper_cb(client, CallbackQuery, _):
         await CallbackQuery.edit_message_text(helpers.HELP_14, reply_markup=keyboard)
     elif cb == "hb15":
         await CallbackQuery.edit_message_text(helpers.HELP_15, reply_markup=keyboard)
-
-
-# Handle mbot_cb callback
+        
+        
 @app.on_callback_query(filters.regex("mbot_cb") & ~BANNED_USERS)
-async def mbot_cb_handler(client, CallbackQuery):
+async def helper_cb(client, CallbackQuery):
     await CallbackQuery.edit_message_text(Helper.HELP_M, reply_markup=InlineKeyboardMarkup(BUTTONS.MBUTTON))
 
 
-# Handle managebot123 callback
-@app.on_callback_query(filters.regex('managebot123') & ~BANNED_USERS)
-async def managebot_handler(client, CallbackQuery):
-    try:
-        language = await get_lang(CallbackQuery.message.chat.id)
-        _ = get_string(language)
-        keyboard = help_pannel(_, True)
+@app.on_callback_query(filters.regex('managebot123'))
+async def on_back_button(client, CallbackQuery):
+    callback_data = CallbackQuery.data.strip()
+    cb = callback_data.split(None, 1)[1]
+    keyboard = help_pannel(_, True)
+    if cb == "settings_back_helper":
         await CallbackQuery.edit_message_text(
             _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
         )
-    except Exception as e:
-        pass
 
-
-# Handle mplus callback
-@app.on_callback_query(filters.regex('mplus') & ~BANNED_USERS)      
-async def mplus_button_handler(client, CallbackQuery):
+@app.on_callback_query(filters.regex('mplus'))      
+async def mb_plugin_button(client, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
     keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴀᴄᴋ", callback_data=f"mbot_cb")]])
     if cb == "Okieeeeee":
-        await CallbackQuery.edit_message_text(f"`something errors`", reply_markup=keyboard, parse_mode=enums.ParseMode.MARKDOWN)
+        await CallbackQuery.edit_message_text(f"`something errors`",reply_markup=keyboard,parse_mode=enums.ParseMode.MARKDOWN)
     else:
         await CallbackQuery.edit_message_text(getattr(Helper, cb), reply_markup=keyboard)
-
-
-# Handle yuki_back callback (THE MISSING HANDLER FOR BACK BUTTON)
-@app.on_callback_query(filters.regex("yuki_back") & ~BANNED_USERS)
-async def yuki_back_handler(client, CallbackQuery):
-    try:
-        await CallbackQuery.answer()
-        language = await get_lang(CallbackQuery.message.chat.id)
-        _ = get_string(language)
-        keyboard = help_pannel(_, True)
-        await CallbackQuery.edit_message_text(
-            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
-        )
-    except Exception as e:
-        pass
