@@ -62,10 +62,6 @@ telegraph
 tgcrypto==1.2.5
 unidecode
 wget
-py-yt-search==0.4.8
-youtube-search-python>=1.6.6
-youtube-search>=2.1.2
-kurigram 
 holidays
 apscheduler
 groq
