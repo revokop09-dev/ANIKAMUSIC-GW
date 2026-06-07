@@ -2,7 +2,7 @@ import asyncio, os, re, httpx, aiofiles.os
 from io import BytesIO 
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from aiofiles.os import path as aiopath
-from py_yt import VideosSearch
+from youtubesearchpython.__future__ import VideosSearch
 
 from ..logging import LOGGER
 
