@@ -137,11 +137,11 @@ async def stream(
                 button = stream_markup_timer(_, chat_id, "00:00", duration_min)
                 
                 # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-                run = await app.send_photo(
+                run = await app.send_video(
                     original_chat_id,
-                    photo=img,
+                    video="https://files.catbox.moe/v5aubf.mp4",
                     caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                    has_spoiler=True
+                    supports_streaming=True,
                 )
                 await inject_premium_markup(original_chat_id, run.id, button)
                 
@@ -203,11 +203,11 @@ async def stream(
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_photo(
+            run = await app.send_video(
                 original_chat_id,
-                photo=img,
+                video="https://files.catbox.moe/v5aubf.mp4",
                 caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                has_spoiler=True
+                supports_streaming=True,
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -237,11 +237,11 @@ async def stream(
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_photo(
+            run = await app.send_video(
                 original_chat_id,
-                photo=config.SOUNCLOUD_IMG_URL,
+                video="https://files.catbox.moe/v5aubf.mp4",
                 caption=_["stream_1"].format(config.SUPPORT_CHAT, title[:23], duration_min, user_name),
-                has_spoiler=True
+                supports_streaming=True,
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -275,11 +275,11 @@ async def stream(
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_photo(
+            run = await app.send_video(
                 original_chat_id,
-                photo=config.TELEGRAM_VIDEO_URL if video else config.TELEGRAM_AUDIO_URL,
+                video="https://files.catbox.moe/v5aubf.mp4",
                 caption=_["stream_1"].format(link, title[:23], duration_min, user_name),
-                has_spoiler=True
+                supports_streaming=True,
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -316,11 +316,11 @@ async def stream(
             button = stream_markup(_, chat_id)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_photo(
+            run = await app.send_video(
                 original_chat_id,
-                photo=img,
+                video="https://files.catbox.moe/v5aubf.mp4",
                 caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                has_spoiler=True
+                supports_streaming=True,
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -348,11 +348,11 @@ async def stream(
             button = stream_markup(_, chat_id)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_photo(
+            run = await app.send_video(
                 original_chat_id,
-                photo=config.STREAM_IMG_URL,
+                video="https://files.catbox.moe/v5aubf.mp4",
                 caption=_["stream_2"].format(user_name),
-                has_spoiler=True
+                supports_streaming=True,
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
