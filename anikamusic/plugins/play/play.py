@@ -455,10 +455,9 @@ async def play_commnd(
                 "f" if fplay else "d",
             )
             await mystic.delete()
-            await message.reply_video(
-                video=img,
+            await message.reply_photo(
+                photo=img,
                 caption=cap,
-                supports_streaming=True,
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
             return await play_logs(message, streamtype=f"Playlist : {plist_type}")
@@ -474,13 +473,12 @@ async def play_commnd(
                     "f" if fplay else "d",
                 )
                 await mystic.delete()
-                await message.reply_video(
-                    video=details["thumb"],
+                await message.reply_photo(
+                    photo=details["thumb"],
                     caption=_["play_10"].format(
                         details["title"].title(),
                         details["duration_min"],
                     ),
-                    supports_streaming=True,
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
                 return await play_logs(message, streamtype=f"Searched on Youtube")
@@ -493,10 +491,9 @@ async def play_commnd(
                     "f" if fplay else "d",
                 )
                 await mystic.delete()
-                await message.reply_video(
-                    video=img,
+                await message.reply_photo(
+                    photo=img,
                     caption=cap,
-                    supports_streaming=True,
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
                 return await play_logs(message, streamtype=f"URL Searched Inline")
