@@ -493,9 +493,10 @@ async def play_commnd(
                     "f" if fplay else "d",
                 )
                 await mystic.delete()
-                await message.reply_photo(
-                    photo=img,
+                await message.reply_video(
+                    video=img,
                     caption=cap,
+                    supports_streaming=True,
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
                 return await play_logs(message, streamtype=f"URL Searched Inline")
