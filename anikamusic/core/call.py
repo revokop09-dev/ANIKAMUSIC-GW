@@ -424,9 +424,9 @@ class Call(PyTgCalls):
                     )
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
-                run = await app.send_video(
+                run = await app.send_photo(
                     chat_id=original_chat_id,
-                    video=img,
+                    photo=img,
                     caption=_["stream_1"].format(
                         f"https://t.me/{app.username}?start=info_{videoid}",
                         title[:23],
