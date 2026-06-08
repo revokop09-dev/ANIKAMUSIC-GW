@@ -458,6 +458,7 @@ async def play_commnd(
             await message.reply_video(
                 video=img,
                 caption=cap,
+                supports_streaming=True,
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
             return await play_logs(message, streamtype=f"Playlist : {plist_type}")
@@ -479,6 +480,7 @@ async def play_commnd(
                         details["title"].title(),
                         details["duration_min"],
                     ),
+                    supports_streaming=True,
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
                 return await play_logs(message, streamtype=f"Searched on Youtube")
