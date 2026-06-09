@@ -5,12 +5,6 @@ from typing import Union
 
 from pyrogram import Client
 from pyrogram.types import InlineKeyboardMarkup
-try:
-    from pyrogram.types import LinkPreviewOptions
-    HAS_PREVIEW_OPTIONS = True
-except ImportError:
-    HAS_PREVIEW_OPTIONS = False
-    
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.exceptions import (
     AlreadyJoinedError,
