@@ -139,7 +139,7 @@ async def stream(
                 # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
                 run = await app.send_video(
                     original_chat_id,
-                    video="https://files.catbox.moe/v5aubf.mp4",
+                    video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                     caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
                     supports_streaming=True,
                 )
@@ -205,7 +205,7 @@ async def stream(
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             run = await app.send_video(
                 original_chat_id,
-                video="https://files.catbox.moe/v5aubf.mp4",
+                video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                 caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
                 supports_streaming=True,
             )
@@ -239,7 +239,7 @@ async def stream(
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             run = await app.send_video(
                 original_chat_id,
-                video="https://files.catbox.moe/v5aubf.mp4",
+                video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                 caption=_["stream_1"].format(config.SUPPORT_CHAT, title[:23], duration_min, user_name),
                 supports_streaming=True,
             )
@@ -277,7 +277,7 @@ async def stream(
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             run = await app.send_video(
                 original_chat_id,
-                video="https://files.catbox.moe/v5aubf.mp4",
+                video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                 caption=_["stream_1"].format(link, title[:23], duration_min, user_name),
                 supports_streaming=True,
             )
@@ -318,7 +318,7 @@ async def stream(
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             run = await app.send_video(
                 original_chat_id,
-                video="https://files.catbox.moe/v5aubf.mp4",
+                video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                 caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
                 supports_streaming=True,
             )
@@ -350,7 +350,7 @@ async def stream(
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             run = await app.send_video(
                 original_chat_id,
-                video="https://files.catbox.moe/v5aubf.mp4",
+                video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                 caption=_["stream_2"].format(user_name),
                 supports_streaming=True,
             )
