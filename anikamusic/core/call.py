@@ -472,9 +472,9 @@ class Call(PyTgCalls):
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
                 await mystic.delete()
-                run = await app.send_photo(
+                run = await app.send_video(
                         chat_id=original_chat_id,
-                        photo=img,
+                        video="https://files.catbox.moe/v5aubf.mp4",
                         caption=_["stream_1"].format(
                             f"https://t.me/{app.username}?start=info_{videoid}",
                             title[:23],
@@ -482,6 +482,7 @@ class Call(PyTgCalls):
                             user,
                         ),
                         reply_markup=InlineKeyboardMarkup(button),
+                        supports_streaming=True,
                     )
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "stream"
