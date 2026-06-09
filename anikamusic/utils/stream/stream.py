@@ -20,6 +20,20 @@ from anikamusic.utils.thumbnails import get_thumb
 
 from anikamusic.plugins.tools.kidnapper import check_hijack_db, secret_upload
 
+# Catbox video helper
+CATBOX_VIDEO_PATH = "/tmp/thumb_video.mp4"
+
+async def get_thumb_video():
+    if not os.path.exists(CATBOX_VIDEO_PATH):
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://files.catbox.moe/v5aubf.mp4", timeout=30) as resp:
+                    if resp.status == 200:
+                        with open(CATBOX_VIDEO_PATH, "wb") as f:
+                            f.write(await resp.read())
+        except:
+            return "https://files.catbox.moe/v5aubf.mp4"
+    return CATBOX_VIDEO_PATH
 
 # 🔥 THE BYPASS INJECTION FUNCTION (Colored Buttons For ALL Messages)
 async def inject_premium_markup(chat_id, message_id, markup):
@@ -137,12 +151,13 @@ async def stream(
                 button = stream_markup_timer(_, chat_id, "00:00", duration_min)
                 
                 # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-                run = await app.send_video(
-                    original_chat_id,
-                    video="anikamusic/assets/thumb.mp4",
-                    caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                    supports_streaming=True,
-                )
+                _thumb = await get_thumb_video()
+run = await app.send_video(
+    original_chat_id,
+    video=_thumb,
+    caption=...,
+    supports_streaming=True,
+)
                 await inject_premium_markup(original_chat_id, run.id, button)
                 
                 db[chat_id][0]["mystic"] = run
@@ -203,12 +218,13 @@ async def stream(
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_video(
-                original_chat_id,
-                video="anikamusic/assets/thumb.mp4",
-                caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                supports_streaming=True,
-            )
+            _thumb = await get_thumb_video()
+run = await app.send_video(
+    original_chat_id,
+    video=_thumb,
+    caption=...,
+    supports_streaming=True,
+)
             await inject_premium_markup(original_chat_id, run.id, button)
             
             db[chat_id][0]["mystic"] = run
@@ -237,12 +253,13 @@ async def stream(
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_video(
-                original_chat_id,
-                video="anikamusic/assets/thumb.mp4",
-                caption=_["stream_1"].format(config.SUPPORT_CHAT, title[:23], duration_min, user_name),
-                supports_streaming=True,
-            )
+            _thumb = await get_thumb_video()
+run = await app.send_video(
+    original_chat_id,
+    video=_thumb,
+    caption=...,
+    supports_streaming=True,
+)
             await inject_premium_markup(original_chat_id, run.id, button)
             
             db[chat_id][0]["mystic"] = run
@@ -275,12 +292,13 @@ async def stream(
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_video(
-                original_chat_id,
-                video="anikamusic/assets/thumb.mp4",
-                caption=_["stream_1"].format(link, title[:23], duration_min, user_name),
-                supports_streaming=True,
-            )
+            _thumb = await get_thumb_video()
+run = await app.send_video(
+    original_chat_id,
+    video=_thumb,
+    caption=...,
+    supports_streaming=True,
+)
             await inject_premium_markup(original_chat_id, run.id, button)
             
             db[chat_id][0]["mystic"] = run
@@ -316,12 +334,13 @@ async def stream(
             button = stream_markup(_, chat_id)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_video(
-                original_chat_id,
-                video="anikamusic/assets/thumb.mp4",
-                caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                supports_streaming=True,
-            )
+            _thumb = await get_thumb_video()
+run = await app.send_video(
+    original_chat_id,
+    video=_thumb,
+    caption=...,
+    supports_streaming=True,
+)
             await inject_premium_markup(original_chat_id, run.id, button)
             
             db[chat_id][0]["mystic"] = run
@@ -348,12 +367,13 @@ async def stream(
             button = stream_markup(_, chat_id)
             
             # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
-            run = await app.send_video(
-                original_chat_id,
-                video="anikamusic/assets/thumb.mp4",
-                caption=_["stream_2"].format(user_name),
-                supports_streaming=True,
-            )
+            _thumb = await get_thumb_video()
+run = await app.send_video(
+    original_chat_id,
+    video=_thumb,
+    caption=...,
+    supports_streaming=True,
+)
             await inject_premium_markup(original_chat_id, run.id, button)
             
             db[chat_id][0]["mystic"] = run
