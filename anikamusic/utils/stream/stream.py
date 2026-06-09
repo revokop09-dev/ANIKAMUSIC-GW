@@ -6,6 +6,11 @@ from random import randint
 from typing import Union
 
 from pyrogram.types import InlineKeyboardMarkup
+try:
+    from pyrogram.types import LinkPreviewOptions
+    HAS_PREVIEW_OPTIONS = True
+except ImportError:
+    HAS_PREVIEW_OPTIONS = False
 
 import config
 from anikamusic import Carbon, YouTube, app
