@@ -63,7 +63,7 @@ async def unban_assistant(_, callback: CallbackQuery):
 @app.on_callback_query(filters.regex("yuki_version_info"))
 async def version_info_callback(client, CallbackQuery):
     text = """
-**❖ ʏᴜᴋɪ ᴍᴜsɪᴄ ᴠᴇʀsɪᴏɴ ɪɴғᴏ ❖**
+**❖ ᴀɴɪᴋᴀ ᴍᴜsɪᴄ ᴠᴇʀsɪᴏɴ ɪɴғᴏ ❖**
 
 **‣ ʙᴏᴛ ᴠᴇʀsɪᴏɴ :** `9.5`
 **‣ ʟᴀsᴛ ᴜᴘᴅᴀᴛᴇᴅ :** `05 April 2026`
