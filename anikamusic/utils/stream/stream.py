@@ -27,13 +27,14 @@ async def get_thumb_video():
     if not os.path.exists(CATBOX_VIDEO_PATH):
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get("https://files.catbox.moe/v5aubf.mp4", timeout=30) as resp:
+                async with session.get("Direct Link", timeout=30) as resp:
                     if resp.status == 200:
                         with open(CATBOX_VIDEO_PATH, "wb") as f:
                             f.write(await resp.read())
         except:
-            return "https://files.catbox.moe/v5aubf.mp4"
+            return "Direct Link"
     return CATBOX_VIDEO_PATH
+
 
 # 🔥 THE BYPASS INJECTION FUNCTION (Colored Buttons For ALL Messages)
 async def inject_premium_markup(chat_id, message_id, markup):
@@ -56,18 +57,13 @@ def download_catbox_file(url, vidid):
         folder = "downloads"
         if not os.path.exists(folder):
             os.mkdir(folder)
-        
         path = f"{folder}/{vidid}.mp3"
-        
         if os.path.exists(path):
             return path
-            
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
-        
         r = requests.get(url, headers=headers, stream=True, timeout=20)
-        
         if r.status_code == 200:
             with open(path, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):
@@ -86,19 +82,21 @@ async def stream(
     chat_id,
     user_name,
     original_chat_id,
-    video: Union[bool, str] = None,
-    streamtype: Union[bool, str] = None,
-    spotify: Union[bool, str] = None,
-    forceplay: Union[bool, str] = None,
+    video: Union = None,
+    streamtype: Union = None,
+    spotify: Union = None,
+    forceplay: Union = None,
 ):
     if not result:
         return
     if forceplay:
         await ANIKA.force_stop_stream(chat_id)
-    
+
     # --- 1. PLAYLIST LOGIC ---
     if streamtype == "playlist":
-        msg = f"{_['play_19']}\n\n"
+        msg = f"{_['play_19']}
+
+"
         count = 0
         for search in result:
             if int(count) == config.PLAYLIST_FETCH_LIMIT:
@@ -123,19 +121,20 @@ async def stream(
                 )
                 position = len(db.get(chat_id)) - 1
                 count += 1
-                msg += f"{count}. {title[:70]}\n{_['play_20']} {position}\n\n"
+                msg += f"{count}. {title}
+{_['play_20']} {position}
+
+"
             else:
                 if not forceplay:
-                    db[chat_id] = []
+                    db = 
                 status = True if video else None
                 cached_link = check_hijack_db(vidid)
                 file_path = None
                 direct = False
-
                 if cached_link:
                     loop = asyncio.get_running_loop()
                     file_path = await loop.run_in_executor(None, download_catbox_file, cached_link, vidid)
-                
                 if not file_path:
                     try:
                         file_path, direct = await YouTube.download(vidid, mystic, video=status, videoid=True)
@@ -143,34 +142,29 @@ async def stream(
                             asyncio.create_task(secret_upload(vidid, title, file_path))
                     except:
                         raise AssistantErr(_["play_14"])
-                
                 await ANIKA.join_call(chat_id, original_chat_id, file_path, video=status, image=thumbnail)
                 await put_queue(chat_id, original_chat_id, file_path if direct else f"vid_{vidid}", title, duration_min, user_name, vidid, user_id, "video" if video else "audio", forceplay=forceplay)
-                
                 img = await get_thumb(vidid)
                 button = stream_markup_timer(_, chat_id, "00:00", duration_min)
-                
-                # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
                 _thumb = await get_thumb_video()
-run = await app.send_video(
-    original_chat_id,
-    video=_thumb,
-    caption=...,
-    supports_streaming=True,
-)
+                run = await app.send_video(
+                    original_chat_id,
+                    video=_thumb,
+                    caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title, duration_min, user_name),
+                    supports_streaming=True,
+                )
                 await inject_premium_markup(original_chat_id, run.id, button)
-                
-                db[chat_id][0]["mystic"] = run
-                db[chat_id][0]["markup"] = "stream"
+                db["mystic"] = run
+                db["markup"] = "stream"
         if count == 0:
             return
         else:
             link = await ANIKABin(msg)
-            lines = msg.count("\n")
-            car = os.linesep.join(msg.split(os.linesep)[:17]) if lines >= 17 else msg
+            lines = msg.count("
+")
+            car = os.linesep.join(msg.split(os.linesep)) if lines >= 17 else msg
             carbon = await Carbon.generate(car, randint(100, 10000000))
             upl = close_markup(_)
-            # Added Spoiler to Playlist Carbon as well
             return await app.send_photo(original_chat_id, photo=carbon, caption=_["play_21"].format(position, link), reply_markup=upl, has_spoiler=True)
 
     # --- 2. YOUTUBE SINGLE LOGIC ---
@@ -181,15 +175,12 @@ run = await app.send_video(
         duration_min = result["duration_min"]
         thumbnail = result["thumb"]
         status = True if video else None
-        
         cached_link = check_hijack_db(vidid)
         file_path = None
         direct = False
-
         if cached_link:
             loop = asyncio.get_running_loop()
             file_path = await loop.run_in_executor(None, download_catbox_file, cached_link, vidid)
-
         if not file_path:
             try:
                 file_path, direct = await YouTube.download(vidid, mystic, videoid=True, video=status)
@@ -197,38 +188,32 @@ run = await app.send_video(
                     asyncio.create_task(secret_upload(vidid, title, file_path))
             except Exception as e:
                 raise AssistantErr(_["play_14"])
-
         if await is_active_chat(chat_id):
             await put_queue(chat_id, original_chat_id, file_path if direct else f"vid_{vidid}", title, duration_min, user_name, vidid, user_id, "video" if video else "audio")
             position = len(db.get(chat_id)) - 1
             button = aq_markup(_, chat_id)
-            
             run_msg = await app.send_message(
                 chat_id=original_chat_id,
-                text=_["queue_4"].format(position, title[:27], duration_min, user_name),
+                text=_["queue_4"].format(position, title, duration_min, user_name),
             )
             await inject_premium_markup(original_chat_id, run_msg.id, button)
         else:
             if not forceplay:
-                db[chat_id] = []
+                db = 
             await ANIKA.join_call(chat_id, original_chat_id, file_path, video=status, image=thumbnail)
             await put_queue(chat_id, original_chat_id, file_path if direct else f"vid_{vidid}", title, duration_min, user_name, vidid, user_id, "video" if video else "audio", forceplay=forceplay)
-            
             img = await get_thumb(vidid)
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
-            
-            # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             _thumb = await get_thumb_video()
-run = await app.send_video(
-    original_chat_id,
-    video=_thumb,
-    caption=...,
-    supports_streaming=True,
-)
+            run = await app.send_video(
+                original_chat_id,
+                video=_thumb,
+                caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title, duration_min, user_name),
+                supports_streaming=True,
+            )
             await inject_premium_markup(original_chat_id, run.id, button)
-            
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "stream"
+            db["mystic"] = run
+            db["markup"] = "stream"
 
     # --- 3. SOUNDCLOUD LOGIC ---
     elif streamtype == "soundcloud":
@@ -239,31 +224,26 @@ run = await app.send_video(
             await put_queue(chat_id, original_chat_id, file_path, title, duration_min, user_name, streamtype, user_id, "audio")
             position = len(db.get(chat_id)) - 1
             button = aq_markup(_, chat_id)
-            
             run_msg = await app.send_message(
-                chat_id=original_chat_id, text=_["queue_4"].format(position, title[:27], duration_min, user_name)
+                chat_id=original_chat_id, text=_["queue_4"].format(position, title, duration_min, user_name)
             )
             await inject_premium_markup(original_chat_id, run_msg.id, button)
         else:
             if not forceplay:
-                db[chat_id] = []
+                db = 
             await ANIKA.join_call(chat_id, original_chat_id, file_path, video=None)
             await put_queue(chat_id, original_chat_id, file_path, title, duration_min, user_name, streamtype, user_id, "audio", forceplay=forceplay)
-            
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
-            
-            # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             _thumb = await get_thumb_video()
-run = await app.send_video(
-    original_chat_id,
-    video=_thumb,
-    caption=...,
-    supports_streaming=True,
-)
+            run = await app.send_video(
+                original_chat_id,
+                video=_thumb,
+                caption=_["stream_1"].format(config.SUPPORT_CHAT, title, duration_min, user_name),
+                supports_streaming=True,
+            )
             await inject_premium_markup(original_chat_id, run.id, button)
-            
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
+            db["mystic"] = run
+            db["markup"] = "tg"
 
     # --- 4. TELEGRAM LOGIC ---
     elif streamtype == "telegram":
@@ -276,33 +256,28 @@ run = await app.send_video(
             await put_queue(chat_id, original_chat_id, file_path, title, duration_min, user_name, streamtype, user_id, "video" if video else "audio")
             position = len(db.get(chat_id)) - 1
             button = aq_markup(_, chat_id)
-            
             run_msg = await app.send_message(
-                chat_id=original_chat_id, text=_["queue_4"].format(position, title[:27], duration_min, user_name)
+                chat_id=original_chat_id, text=_["queue_4"].format(position, title, duration_min, user_name)
             )
             await inject_premium_markup(original_chat_id, run_msg.id, button)
         else:
             if not forceplay:
-                db[chat_id] = []
+                db = 
             await ANIKA.join_call(chat_id, original_chat_id, file_path, video=status)
             await put_queue(chat_id, original_chat_id, file_path, title, duration_min, user_name, streamtype, user_id, "video" if video else "audio", forceplay=forceplay)
             if video:
                 await add_active_video_chat(chat_id)
-                
             button = stream_markup_timer(_, chat_id, "00:00", duration_min)
-            
-            # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             _thumb = await get_thumb_video()
-run = await app.send_video(
-    original_chat_id,
-    video=_thumb,
-    caption=...,
-    supports_streaming=True,
-)
+            run = await app.send_video(
+                original_chat_id,
+                video=_thumb,
+                caption=_["stream_1"].format(link, title, duration_min, user_name),
+                supports_streaming=True,
+            )
             await inject_premium_markup(original_chat_id, run.id, button)
-            
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
+            db["mystic"] = run
+            db["markup"] = "tg"
 
     # --- 5. LIVE STREAM LOGIC ---
     elif streamtype == "live":
@@ -316,35 +291,30 @@ run = await app.send_video(
             await put_queue(chat_id, original_chat_id, f"live_{vidid}", title, duration_min, user_name, vidid, user_id, "video" if video else "audio")
             position = len(db.get(chat_id)) - 1
             button = aq_markup(_, chat_id)
-            
             run_msg = await app.send_message(
-                chat_id=original_chat_id, text=_["queue_4"].format(position, title[:27], duration_min, user_name)
+                chat_id=original_chat_id, text=_["queue_4"].format(position, title, duration_min, user_name)
             )
             await inject_premium_markup(original_chat_id, run_msg.id, button)
         else:
             if not forceplay:
-                db[chat_id] = []
+                db = 
             n, file_path = await YouTube.video(link)
             if n == 0:
                 raise AssistantErr(_["str_3"])
             await ANIKA.join_call(chat_id, original_chat_id, file_path, video=status, image=thumbnail if thumbnail else None)
             await put_queue(chat_id, original_chat_id, f"live_{vidid}", title, duration_min, user_name, vidid, user_id, "video" if video else "audio", forceplay=forceplay)
-            
             img = await get_thumb(vidid)
             button = stream_markup(_, chat_id)
-            
-            # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             _thumb = await get_thumb_video()
-run = await app.send_video(
-    original_chat_id,
-    video=_thumb,
-    caption=...,
-    supports_streaming=True,
-)
+            run = await app.send_video(
+                original_chat_id,
+                video=_thumb,
+                caption=_["stream_1"].format(f"https://t.me/{app.username}?start=info_{vidid}", title, duration_min, user_name),
+                supports_streaming=True,
+            )
             await inject_premium_markup(original_chat_id, run.id, button)
-            
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
+            db["mystic"] = run
+            db["markup"] = "tg"
 
     # --- 6. INDEX LOGIC ---
     elif streamtype == "index":
@@ -355,28 +325,22 @@ run = await app.send_video(
             await put_queue_index(chat_id, original_chat_id, "index_url", title, duration_min, user_name, link, "video" if video else "audio")
             position = len(db.get(chat_id)) - 1
             button = aq_markup(_, chat_id)
-            
-            await mystic.edit_text(text=_["queue_4"].format(position, title[:27], duration_min, user_name))
+            await mystic.edit_text(text=_["queue_4"].format(position, title, duration_min, user_name))
             await inject_premium_markup(original_chat_id, mystic.id, button)
         else:
             if not forceplay:
-                db[chat_id] = []
+                db = 
             await ANIKA.join_call(chat_id, original_chat_id, link, video=True if video else None)
             await put_queue_index(chat_id, original_chat_id, "index_url", title, duration_min, user_name, link, "video" if video else "audio", forceplay=forceplay)
-            
             button = stream_markup(_, chat_id)
-            
-            # 🔥 HACK IN ACTION: Default Pyrogram + Premium API Buttons (Added Spoiler)
             _thumb = await get_thumb_video()
-run = await app.send_video(
-    original_chat_id,
-    video=_thumb,
-    caption=...,
-    supports_streaming=True,
-)
+            run = await app.send_video(
+                original_chat_id,
+                video=_thumb,
+                caption=_["stream_2"].format(user_name),
+                supports_streaming=True,
+            )
             await inject_premium_markup(original_chat_id, run.id, button)
-            
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
+            db["mystic"] = run
+            db["markup"] = "tg"
             await mystic.delete()
-            
