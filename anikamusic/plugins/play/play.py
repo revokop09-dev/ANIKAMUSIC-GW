@@ -475,7 +475,7 @@ async def play_commnd(
                 await mystic.delete()
                 await message.reply_photo(
                     photo=details["thumb"],
-                    caption=_["play_10"].format(
+                    caption=_["stream_4"].format(
                         details["title"].title(),
                         details["duration_min"],
                     ),
