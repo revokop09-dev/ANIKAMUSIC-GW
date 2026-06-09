@@ -426,7 +426,7 @@ class Call(PyTgCalls):
                 button = stream_markup(_, chat_id)
                 run = await app.send_video(
                         chat_id=original_chat_id,
-                        video="https://files.catbox.moe/v5aubf.mp4",
+                        video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                         caption=_["stream_1"].format(
                             f"https://t.me/{app.username}?start=info_{videoid}",
                             title[:23],
@@ -474,7 +474,7 @@ class Call(PyTgCalls):
                 await mystic.delete()
                 run = await app.send_video(
                         chat_id=original_chat_id,
-                        video="https://files.catbox.moe/v5aubf.mp4",
+                        video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                         caption=_["stream_1"].format(
                             f"https://t.me/{app.username}?start=info_{videoid}",
                             title[:23],
@@ -506,7 +506,7 @@ class Call(PyTgCalls):
                 button = stream_markup(_, chat_id)
                 run = await app.send_video(
                         chat_id=original_chat_id,
-                        video="https://files.catbox.moe/v5aubf.mp4",
+                        video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                         caption=_["stream_2"].format(user),
                         reply_markup=InlineKeyboardMarkup(button),
                         supports_streaming=True,
@@ -536,7 +536,7 @@ class Call(PyTgCalls):
                     button = stream_markup(_, chat_id)
                     run = await app.send_video(
                         chat_id=original_chat_id,
-                        video="https://files.catbox.moe/v5aubf.mp4",
+                        video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                         caption=_["stream_1"].format(
                             config.SUPPORT_CHAT, title[:23], check[0]["dur"], user
                         ),
@@ -549,7 +549,7 @@ class Call(PyTgCalls):
                     button = stream_markup(_, chat_id)
                     run = await app.send_video(
                         chat_id=original_chat_id,
-                        video="https://files.catbox.moe/v5aubf.mp4",
+                        video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                         caption=_["stream_1"].format(
                             config.SUPPORT_CHAT, title[:23], check[0]["dur"], user
                         ),
@@ -563,7 +563,7 @@ class Call(PyTgCalls):
                     button = stream_markup(_, chat_id)
                     run = await app.send_video(
                         chat_id=original_chat_id,
-                        video="https://files.catbox.moe/v5aubf.mp4",
+                        video="BAACAgUAAxkBAAFL6EBqJ3iyxfbfKn5KHa_1S4UpjRucSwAC4SAAAt2UMVXKPNx7a9YlbDsE",
                         caption=_["stream_1"].format(
                             f"https://t.me/{app.username}?start=info_{videoid}",
                             title[:23],
