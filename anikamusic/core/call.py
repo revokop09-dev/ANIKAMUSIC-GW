@@ -424,18 +424,14 @@ class Call(PyTgCalls):
                     )
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
-                run = await app.send_video(
-                        chat_id=original_chat_id,
-                        video="anikamusic/assets/thumb.mp4",
-                        caption=_["stream_1"].format(
-                            f"https://t.me/{app.username}?start=info_{videoid}",
-                            title[:23],
-                            check[0]["dur"],
-                            user,
-                        ),
-                        reply_markup=InlineKeyboardMarkup(button),
-                        supports_streaming=True,
-                    )
+                _thumb = await get_thumb_video()
+run = await app.send_video(
+    chat_id=original_chat_id,
+    video=_thumb,
+    caption=_["stream_1"].format(...),
+    reply_markup=InlineKeyboardMarkup(button),
+    supports_streaming=True,
+)
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             elif "vid_" in queued:
@@ -472,18 +468,14 @@ class Call(PyTgCalls):
                 img = await get_thumb(videoid)
                 button = stream_markup(_, chat_id)
                 await mystic.delete()
-                run = await app.send_video(
-                        chat_id=original_chat_id,
-                        video="anikamusic/assets/thumb.mp4",
-                        caption=_["stream_1"].format(
-                            f"https://t.me/{app.username}?start=info_{videoid}",
-                            title[:23],
-                            check[0]["dur"],
-                            user,
-                        ),
-                        reply_markup=InlineKeyboardMarkup(button),
-                        supports_streaming=True,
-                    )
+                _thumb = await get_thumb_video()
+run = await app.send_video(
+    chat_id=original_chat_id,
+    video=_thumb,
+    caption=_["stream_1"].format(...),
+    reply_markup=InlineKeyboardMarkup(button),
+    supports_streaming=True,
+)
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "stream"
             elif "index_" in queued:
@@ -504,13 +496,14 @@ class Call(PyTgCalls):
                         text=_["call_6"],
                     )
                 button = stream_markup(_, chat_id)
-                run = await app.send_video(
-                        chat_id=original_chat_id,
-                        video="anikamusic/assets/thumb.mp4",
-                        caption=_["stream_2"].format(user),
-                        reply_markup=InlineKeyboardMarkup(button),
-                        supports_streaming=True,
-                    )
+                _thumb = await get_thumb_video()
+run = await app.send_video(
+    chat_id=original_chat_id,
+    video=_thumb,
+    caption=_["stream_1"].format(...),
+    reply_markup=InlineKeyboardMarkup(button),
+    supports_streaming=True,
+)
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             else:
@@ -534,15 +527,14 @@ class Call(PyTgCalls):
                     )
                 if videoid == "telegram":
                     button = stream_markup(_, chat_id)
-                    run = await app.send_video(
-                        chat_id=original_chat_id,
-                        video="anikamusic/assets/thumb.mp4",
-                        caption=_["stream_1"].format(
-                            config.SUPPORT_CHAT, title[:23], check[0]["dur"], user
-                        ),
-                        reply_markup=InlineKeyboardMarkup(button),
-                        supports_streaming=True,
-                    )
+                    _thumb = await get_thumb_video()
+run = await app.send_video(
+    chat_id=original_chat_id,
+    video=_thumb,
+    caption=_["stream_1"].format(...),
+    reply_markup=InlineKeyboardMarkup(button),
+    supports_streaming=True,
+)
                     db[chat_id][0]["mystic"] = run
                     db[chat_id][0]["markup"] = "tg"
                 elif videoid == "soundcloud":
@@ -561,18 +553,14 @@ class Call(PyTgCalls):
                 else:
                     img = await get_thumb(videoid)
                     button = stream_markup(_, chat_id)
-                    run = await app.send_video(
-                        chat_id=original_chat_id,
-                        video="anikamusic/assets/thumb.mp4",
-                        caption=_["stream_1"].format(
-                            f"https://t.me/{app.username}?start=info_{videoid}",
-                            title[:23],
-                            check[0]["dur"],
-                            user,
-                        ),
-                        reply_markup=InlineKeyboardMarkup(button),
-                        supports_streaming=True,
-                    )
+                    _thumb = await get_thumb_video()
+run = await app.send_video(
+    chat_id=original_chat_id,
+    video=_thumb,
+    caption=_["stream_1"].format(...),
+    reply_markup=InlineKeyboardMarkup(button),
+    supports_streaming=True,
+)
                     db[chat_id][0]["mystic"] = run
                     db[chat_id][0]["markup"] = "stream"
 
