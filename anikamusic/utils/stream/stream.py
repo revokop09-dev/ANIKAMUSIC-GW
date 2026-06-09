@@ -141,7 +141,7 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_4"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                    has_spoiler=True
+                    has_spoiler=False
                 )
                 await inject_premium_markup(original_chat_id, run.id, button)
                 
@@ -156,7 +156,7 @@ async def stream(
             carbon = await Carbon.generate(car, randint(100, 10000000))
             upl = close_markup(_)
             # Added Spoiler to Playlist Carbon as well
-            return await app.send_photo(original_chat_id, photo=carbon, caption=_["play_21"].format(position, link), reply_markup=upl, has_spoiler=True)
+            return await app.send_photo(original_chat_id, photo=carbon, caption=_["play_21"].format(position, link), reply_markup=upl, has_spoiler=False)
 
     # --- 2. YOUTUBE SINGLE LOGIC ---
     elif streamtype == "youtube":
@@ -207,7 +207,7 @@ async def stream(
                 original_chat_id,
                 photo=img,
                 caption=_["stream_4"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                has_spoiler=True
+                has_spoiler=False
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -241,7 +241,7 @@ async def stream(
                 original_chat_id,
                 photo=config.SOUNCLOUD_IMG_URL,
                 caption=_["stream_4"].format(config.SUPPORT_CHAT, title[:23], duration_min, user_name),
-                has_spoiler=True
+                has_spoiler=False
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -279,7 +279,7 @@ async def stream(
                 original_chat_id,
                 photo=config.TELEGRAM_VIDEO_URL if video else config.TELEGRAM_AUDIO_URL,
                 caption=_["stream_4"].format(link, title[:23], duration_min, user_name),
-                has_spoiler=True
+                has_spoiler=False
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -320,7 +320,7 @@ async def stream(
                 original_chat_id,
                 photo=img,
                 caption=_["stream_4"].format(f"https://t.me/{app.username}?start=info_{vidid}", title[:23], duration_min, user_name),
-                has_spoiler=True
+                has_spoiler=False
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
@@ -352,7 +352,7 @@ async def stream(
                 original_chat_id,
                 photo=config.STREAM_IMG_URL,
                 caption=_["stream_2"].format(user_name),
-                has_spoiler=True
+                has_spoiler=False
             )
             await inject_premium_markup(original_chat_id, run.id, button)
             
