@@ -19,7 +19,7 @@ TRENDING_SONGS = [
 
 @app.on_message(
     filters.command(
-        ["autoplay", "autoqueue"],
+        ["autoplayy", "autoqueuee"],
         prefixes=["/", "!", "."]
     )
     & filters.group
