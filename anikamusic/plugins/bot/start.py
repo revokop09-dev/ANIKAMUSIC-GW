@@ -46,64 +46,36 @@ PROMO =  "───────────────────────\
 
 GREET = ["💞", "🥂", "🔍", "🧪", "🥂", "⚡️", "🔥"]
 
-# 🔥 MAGIC BUTTON FIXER 🔥
-def fix_markup(buttons):
-    if not isinstance(buttons, list):
-        return buttons
-    fixed_buttons = []
-    for row in buttons:
-        fixed_row = []
-        for btn in row:
-            if isinstance(btn, dict):
-                try:
-                    fixed_row.append(InlineKeyboardButton(**btn))
-                except TypeError:
-                    safe_btn = {k: v for k, v in btn.items() if k in ["text", "callback_data", "url"]}
-                    fixed_row.append(InlineKeyboardButton(**safe_btn))
-            else:
-                fixed_row.append(btn)
-        fixed_buttons.append(fixed_row)
-    return InlineKeyboardMarkup(fixed_buttons)
-
+# 🔥 SAFETY HELPER
 def get_raw_markup(markup):
-    keyboard = markup.inline_keyboard if hasattr(markup, 'inline_keyboard') else markup
-    if isinstance(keyboard, list):
+    if hasattr(markup, 'inline_keyboard'):
         raw_kb = []
-        for row in keyboard:
+        for row in markup.inline_keyboard:
             raw_row = []
             for btn in row:
-                if isinstance(btn, dict):
-                    raw_row.append(btn)
-                else:
-                    raw_btn = {"text": btn.text}
-                    if getattr(btn, "callback_data", None): 
-                        raw_btn["callback_data"] = btn.callback_data
-                    if getattr(btn, "url", None): 
-                        raw_btn["url"] = btn.url
-                    # 🔥 FIXED STYLE JSON SERIALIZATION 🔥
-                    if hasattr(btn, "style") and btn.style: 
-                        raw_btn["style"] = btn.style.value if hasattr(btn.style, "value") else str(btn.style)
-                    # 🔥 ADDED BACK CUSTOM EMOJI ID 🔥
-                    if hasattr(btn, "icon_custom_emoji_id") and btn.icon_custom_emoji_id:
-                        raw_btn["icon_custom_emoji_id"] = str(btn.icon_custom_emoji_id)
-                    raw_row.append(raw_btn)
+                raw_btn = {"text": btn.text}
+                if btn.callback_data: raw_btn["callback_data"] = btn.callback_data
+                if btn.url: raw_btn["url"] = btn.url
+                raw_row.append(raw_btn)
             raw_kb.append(raw_row)
         return raw_kb
-    return keyboard
+    return markup
 
+# 🔥 INJECT PREMIUM BUTTONS
 async def inject_premium_markup(chat_id, message_id, markup):
     try:
-        raw_markup = get_raw_markup(markup)
+        markup = get_raw_markup(markup)
         token = getattr(config, "BOT_TOKEN", getattr(app, "bot_token", None))
         url = f"https://api.telegram.org/bot{token}/editMessageReplyMarkup"
-        payload = {"chat_id": chat_id, "message_id": message_id, "reply_markup": {"inline_keyboard": raw_markup}}
+        payload = {"chat_id": chat_id, "message_id": message_id, "reply_markup": {"inline_keyboard": markup}}
         async with aiohttp.ClientSession() as session:
             await session.post(url, json=payload)
-    except:
+    except Exception as e:
         pass
 
+# 🔥 THE MAGIC START FUNCTION
 async def send_magic_start(chat_id, photo_url, caption, markup, reply_to_id=None):
-    raw_markup = get_raw_markup(markup)
+    markup = get_raw_markup(markup)
     try:
         token = getattr(config, "BOT_TOKEN", getattr(app, "bot_token", None))
         url = f"https://api.telegram.org/bot{token}/sendPhoto"
@@ -115,7 +87,7 @@ async def send_magic_start(chat_id, photo_url, caption, markup, reply_to_id=None
             "parse_mode": "HTML",
             "has_spoiler": True,  
             "message_effect_id": "5159385139981059251", # ❤️ Hearts Animation
-            "reply_markup": {"inline_keyboard": raw_markup}
+            "reply_markup": {"inline_keyboard": markup}
         }
         if reply_to_id:
             payload["reply_to_message_id"] = reply_to_id
@@ -125,15 +97,11 @@ async def send_magic_start(chat_id, photo_url, caption, markup, reply_to_id=None
                 res = await resp.json()
                 
                 if not res.get("ok"):
-                    # 🔥 DICTIONARY CRASH FIX
-                    actual_markup = fix_markup(markup) if isinstance(markup, list) else markup
-                    run = await app.send_photo(chat_id, photo=photo_url, caption=caption, has_spoiler=True, reply_markup=actual_markup) 
+                    run = await app.send_photo(chat_id, photo=photo_url, caption=caption, has_spoiler=True) 
                     await inject_premium_markup(chat_id, run.id, markup)
                     
     except Exception as e:
-        # 🔥 DICTIONARY CRASH FIX
-        actual_markup = fix_markup(markup) if isinstance(markup, list) else markup
-        run = await app.send_photo(chat_id, photo=photo_url, caption=caption, has_spoiler=True, reply_markup=actual_markup)
+        run = await app.send_photo(chat_id, photo=photo_url, caption=caption, has_spoiler=True)
         await inject_premium_markup(chat_id, run.id, markup)
 
 
@@ -142,35 +110,41 @@ async def send_magic_start(chat_id, photo_url, caption, markup, reply_to_id=None
 async def start_pm(client, message: Message, _):
     
     try:
-        await client.send_reaction(chat_id=message.chat.id, message_id=message.id, emoji="🥰")
+        await client.send_reaction(chat_id=message.chat.id, message_id=message.id, emoji="⚡")
     except: pass
         
     try:
         stk = await message.reply_sticker("CAACAgUAAxkBAAFGelBp0ipffTacP6bK3ik2BabuZJohkwACoh0AAsI8kFYAARHuC8AH2Jw7BA")
-        await asyncio.sleep(2) 
+        await asyncio.sleep(1) 
         await stk.delete()     
     except: pass
 
     loading_1 = await message.reply_text(random.choice(GREET))
     await add_served_user(message.from_user.id)
     
-    await asyncio.sleep(0.4)
-    await loading_1.edit_text("<emoji id='5413546177683539369'>😈</emoji> <b>ᴅɪηɢ ᴅᴏηɢ.</b>")
-    await asyncio.sleep(0.4)
-    await loading_1.edit_text("<emoji id='5413546177683539369'>😈</emoji> <b>ᴅɪηɢ ᴅᴏηɢ..</b>")
-    await asyncio.sleep(0.4)
-    await loading_1.edit_text("<emoji id='6080202089311507876'>😎</emoji> <b>sᴛᴧʀᴛɪηɢ...</b>")
-    await asyncio.sleep(0.4)
-    await loading_1.edit_text("<emoji id='6001132493011425597'>💖</emoji> <b>ʜєʏ ʙᴧʙʏ!</b>")
-    await asyncio.sleep(0.4)
-    await loading_1.edit_text("<emoji id='5413840936994097463'>🌺</emoji> <b>𝐀ɴɪᴋᴀ ꭙ ϻᴜsɪᴄ ♪\nsᴛᴧʀᴛed!</b>")
-    await asyncio.sleep(0.5)
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ.❤️‍🔥</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ..❤️‍🔥</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ...❤️‍🔥</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>ʜєʏ ʙᴧʙʏ! 💞</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>𝐀ɴɪᴋᴀ</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>𝐀ɴɪᴋᴀ ꭙ</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>𝐀ɴɪᴋᴀ ꭙ ϻᴜsɪᴄ ♪</b>")
+    await asyncio.sleep(0.1)
+    await loading_1.edit_text("<b>𝐀ɴɪᴋᴀ ꭙ ϻᴜsɪᴄ♪\nsᴛᴧʀᴛєᴅ!🥀</b>")
+    await asyncio.sleep(0.1)
     await loading_1.delete()
     
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         
-        # CLAIMX REWARD HANDLER
+        # 🔥 CLAIMX REWARD HANDLER (DM ECO LOGIC)
         if name == "claimx":
             user_id = message.from_user.id
             user_data = await game_db.find_one({"user_id": user_id})
@@ -201,12 +175,14 @@ async def start_pm(client, message: Message, _):
                 
             await client.send_message(message.chat.id, claim_text)
             
+            # Show normal start panel after claim status
             out = private_panel(_)
             UP, CPU, RAM, DISK = await bot_sys_stats()
             served_chats, served_users = len(await get_served_chats()), len(await get_served_users())
             caption_text = _["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM, served_users, served_chats)
             return await send_magic_start(message.chat.id, random.choice(YUMI_PICS), caption_text, out)
 
+        # --- NORMAL CLAIM REWARD ---
         elif name.startswith("claim"):
             claim_text = "🎉 **Welcome to the DM!**\n\n<emoji id='6334471179801200139'>🎉</emoji> You've successfully connected. Your mini-game profile is active and your points are safe!"
             await client.send_message(message.chat.id, claim_text)
@@ -217,6 +193,7 @@ async def start_pm(client, message: Message, _):
             caption_text = _["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM, served_users, served_chats)
             return await send_magic_start(message.chat.id, random.choice(YUMI_PICS), caption_text, out)
 
+        # --- HELP COMMAND ---
         if name[0:4] == "help":
             keyboard = help_pannel(_, True) 
             return await send_magic_start(
@@ -226,6 +203,7 @@ async def start_pm(client, message: Message, _):
                 markup=keyboard
             )
             
+        # --- SUDO LIST ---
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
@@ -235,6 +213,7 @@ async def start_pm(client, message: Message, _):
                 )
             return
             
+        # --- INFO COMMAND ---
         if name[0:3] == "inf":
             m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
@@ -311,11 +290,9 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                bot_welcome = f"<emoji id='6080202089311507876'>😎</emoji> <b>𝖶𝖾𝗅𝖼𝗈𝗆𝖾 𝖳𝗈 {message.chat.title}</b>\n<emoji id='6001132493011425597'>💖</emoji> 𝖳𝗁𝖺𝗇𝗄𝗌 𝖿ᴏʀ 𝖺𝖽𝖽𝗂𝗇𝗀 𝗆𝖾, 𝖨 𝖺𝗆 𝗋𝖾𝖺𝖽𝗒 𝗍𝗈 𝗉𝗅𝖺𝗒!"
+                bot_welcome = f"<emoji id='6080202089311507876'>😎</emoji> <b>𝖶𝖾𝗅𝖼𝗈𝗆𝖾 𝖳𝗈 {message.chat.title}</b>\n<emoji id='6001132493011425597'>💖</emoji> 𝖳𝗁𝖺𝗇𝗄𝗌 𝖿𝗈𝗋 𝖺𝖽𝖽𝗂𝗇𝗀 𝗆𝖾, 𝖨 𝖺𝗆 𝗋𝖾𝖺𝖽𝗒 𝗍𝗈 𝗉𝗅𝖺𝗒!"
                 
-                # 🔥 DICTIONARY CRASH FIX FOR WELCOME
-                actual_out = fix_markup(out) if isinstance(out, list) else out
-                run = await message.reply_text(text=bot_welcome, reply_markup=actual_out)
+                run = await message.reply_text(text=bot_welcome)
                 await inject_premium_markup(message.chat.id, run.id, out)
                 
                 await add_served_chat(message.chat.id)
@@ -328,7 +305,7 @@ async def welcome(client, message: Message):
                 
                 await message.stop_propagation()
             else:
-                user_welcome = f"<emoji id='5413840936994097463'>🌺</emoji> <b>𝖶𝖾𝗅𝖼ᴏᴍᴇ 𝖳ᴏ {message.chat.title}, {member.mention}!</b>"
+                user_welcome = f"<emoji id='5413840936994097463'>🌺</emoji> <b>𝖶𝖾𝗅𝖼𝗈𝗆𝖾 𝖳𝗈 {message.chat.title}, {member.mention}!</b>"
                 run = await message.reply_text(text=user_welcome)
                 
                 async def delete_user_msg():
@@ -339,4 +316,4 @@ async def welcome(client, message: Message):
 
         except Exception as ex:
             pass
-            
+        
